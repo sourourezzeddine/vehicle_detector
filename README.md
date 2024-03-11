@@ -4,8 +4,8 @@ a model  that detects vehicles entering a parking lot, extracts specific feature
 
 # TO_DO_LIST:
 
-[x]vehicle detection model    
-[]LP extraction              
-[]Nationality                
-[x]color                     
-[x]json file all done 
+[x] vehicle detection model    
+[] LP extraction              
+[] Nationality                
+[x] color                     
+[x] json file all done 
