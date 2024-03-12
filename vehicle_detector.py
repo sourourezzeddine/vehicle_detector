@@ -1,6 +1,5 @@
 import cv2
 import matplotlib.pyplot as plt
-#import random
 import torch
 import json
 import uuid
@@ -45,7 +44,7 @@ def predict_car_color(image_to_cap):
 
 
 def detect_screenshot_optimized(video_file): 
-    model = YOLO("/home/pc/Documents/best.pt")
+    model = YOLO("/home/pc/vehicle_detector/best.pt")
     cap = cv2.VideoCapture(video_file)  
     frame_number = 0
     bg_subtractor = cv2.createBackgroundSubtractorMOG2()  # Create background subtractor object
@@ -103,7 +102,7 @@ def detect_screenshot_optimized(video_file):
                             x, y, w, h = cv2.boundingRect(largest_contour)
                             if w * h > area_threshold:  
                             # Car has stopped, take a screenshot
-                                screenshot_filename = f"/home/pc/Documents/runs/detect/screenshot/_{frame_number}.jpg"
+                                screenshot_filename = f"/home/pc/vehicle_detector/_{frame_number}.jpg"
                                 cv2.imwrite(screenshot_filename, frame)
                                 print(f"Screenshot saved as {screenshot_filename}")
                                 #print(predict_car_color(screenshot_filename))
@@ -111,7 +110,7 @@ def detect_screenshot_optimized(video_file):
                             os.remove(screenshot_filename)
                         for i in range(len(result)):
                             if result[i].boxes.cpu().numpy().cls == [          2]:
-                                result[i].save_crop('/home/pc/Documents/runs/detect/screenshot/', f'/home/pc/Documents/runs/detect/screenshot/LP_cropped{frame_number}')
+                                result[i].save_crop('/home/pc/vehicle_detector/', f'/home/pc/vehicle_detector/LP_cropped{frame_number}')
                         #here imma be adding some final_features.append inst to add color, lp valu, nationality        
                         return final_features
 
