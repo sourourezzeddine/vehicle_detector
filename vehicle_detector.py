@@ -8,7 +8,15 @@ from PIL import Image
 from torchvision import transforms
 from ultralytics import YOLO
 import numpy as np
+import random
+from paho.mqtt import client as mqtt_client
 
+
+broker = 'localhost'
+port = 1883
+topic = "features_message"
+# Generate a Client ID with the publish prefix.
+client_id = f'publish-{random.randint(0, 1000)}'
 
 class_names = ['car','truck','LP','Toyota','Volkswagen','Ford','Honda','Chevrolet','Nissan','BMW','Mercedes','Audi','Tesla','Hyundai','Kia','Mazda','Fiat','Jeep','Porsche','Volvo','Land Rover','Peugeot','Renault','Citroën','Isuzu','MAN','Iveco','Mitsubishi','Opel','Scoda','Mini','Ferrari','Lamborghini','Jaguar','Suzuki', 'Ibiza', 'Haval','GMC']
 
@@ -45,7 +53,7 @@ def predict_car_color(image_to_cap):
 
 def detect_screenshot_optimized(video_file): 
     model = YOLO("/home/pc/vehicle_detector/best.pt")
-    cap = cv2.VideoCapture(video_file)  
+    cap = cv2.VideoCapture(0)  
     frame_number = 0
     bg_subtractor = cv2.createBackgroundSubtractorMOG2()  # Create background subtractor object
 
@@ -133,6 +141,11 @@ def detect_screenshot_optimized(video_file):
     finally:
         cap.release()
 
+def connect_mqtt():
+    client = mqtt_client.Client(client_id)
+    client.connect(broker, port)
+    return client
+
 
 def features_to_json(file_path):
     # Your existing code
@@ -164,17 +177,13 @@ def features_to_json(file_path):
 
     # Convert the dictionary to a JSON string
     json_message = json.dumps(json_data, indent=4)
+    result = connect_mqtt().publish("features_message", json_message)
 
-    # Remove the existing output.json file if it exists
-    if os.path.exists('output.json'):
-        os.remove('output.json')
+def run():
+    client = connect_mqtt()
+    client.loop_start()
+    while True:
+        features_to_json('/home/pc/Downloads/4.webm') 
 
-    # Writing JSON data to a new file
-    with open('output.json', 'w') as json_file:
-        json_file.write(json_message)
-
-    return 'output.json'  # Return the filename
-
-
-json_file_path = features_to_json('/home/pc/Downloads/4.webm')
-print(f"JSON file saved at: {json_file_path}")
+if __name__ == '__main__':
+    run()
