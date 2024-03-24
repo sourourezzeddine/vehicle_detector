@@ -1,11 +1,11 @@
 # vehicle_detector
 a model  that detects vehicles entering a parking lot, extracts specific features, and classifies them.
 
+# ToDo_List
 
-# TO_DO_LIST:
+- [X] detect vehicle type
+- [X] detect vehicle brand
+- [X] detect vehicle color
+- [ ] LP
+- [ ] detect nationality
 
-- [x] vehicle detection model    
-- [ ] LP extraction              
-- [ ] Nationality                
-- [x] color                     
-- [x] json file all done 
