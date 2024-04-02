@@ -10,6 +10,7 @@ from ultralytics import YOLO
 import numpy as np
 import random
 from paho.mqtt import client as mqtt_client
+import easyocr
 
 
 broker = 'localhost'
@@ -47,6 +48,20 @@ def predict_car_color(image_to_cap):
     car_color = colors[top_class.item()]
     probability = top_probability.item()
     return car_color, probability
+
+def read_license_plate(im):
+    license_plate_crop=cv2.imread(im)
+    license_plate_crop_gray = cv2.cvtColor(license_plate_crop, cv2.COLOR_BGR2GRAY)
+    _, license_plate_crop_thresh = cv2.threshold(license_plate_crop_gray, 64, 255, cv2.THRESH_BINARY_INV)
+    reader = easyocr.Reader(['en'], gpu=False)
+    detections = reader.readtext(license_plate_crop)
+    # Sort the OCR results by bounding box area and x-coordinate
+    sorted_results = sorted(detections, key=lambda x: x[0][0][0])
+    lp_text=''
+    for detection in sorted_results:
+        bbox, text, score = detection
+        lp_text+=text.upper()
+    return lp_text
 
 
 
@@ -127,13 +142,19 @@ def detect_screenshot_optimized(video_file):
                             # Car has stopped, take a screenshot
                                 screenshot_filename = f"/home/pc/vehicle_detector/_{frame_number}.jpg"
                                 cv2.imwrite(screenshot_filename, frame)
-                                print(f"Screenshot saved as {screenshot_filename}")
-                                #print(predict_car_color(screenshot_filename))
+                                
                                 final_features.append(predict_car_color(screenshot_filename))
-                            os.remove(screenshot_filename)
+                                os.remove(screenshot_filename)
                         for i in range(len(result)):
                             if result[i].boxes.cpu().numpy().cls == [          2]:
-                                result[i].save_crop('/home/pc/vehicle_detector/', f'/home/pc/vehicle_detector/LP_cropped{frame_number}')
+                                cropped_LP_filename = f'/home/pc/Documents/runs/detect/screenshot/LP_cropped{frame_number}'
+                                cropped_LP_file = f'/home/pc/Documents/runs/detect/screenshot/LP_cropped{frame_number}.jpg'
+                                result[i].save_crop('/home/pc/Documents/runs/detect/screenshot/', cropped_LP_filename)
+                                LP=read_license_plate(cropped_LP_file)
+                                if len(LP)>3:
+                                        final_features[1]=LP
+                        
+                                os.remove(cropped_LP_file)
                         return final_features
 
     finally:
@@ -158,7 +179,6 @@ def features_to_json(file_path):
                 "brand": values_list[2],
                 "class": values_list[0],  
                 "color": values_list[3][0],
-                "color_probability": values_list[3][1],
                 "country": "France",
                 "model": "unable to identify model",
                 "origin": "camera LPM",
