@@ -46,7 +46,6 @@ def predict_car_color(image_to_cap):
     # Get the predicted class name and its probability
     car_color = colors[top_class.item()]
     probability = top_probability.item()
-    #print(f'The car class is {car_color} with a probability of {probability}')
     return car_color, probability
 
 
@@ -135,7 +134,6 @@ def detect_screenshot_optimized(video_file):
                         for i in range(len(result)):
                             if result[i].boxes.cpu().numpy().cls == [          2]:
                                 result[i].save_crop('/home/pc/vehicle_detector/', f'/home/pc/vehicle_detector/LP_cropped{frame_number}')
-                        #here imma be adding some final_features.append inst to add color, lp valu, nationality        
                         return final_features
 
     finally:
