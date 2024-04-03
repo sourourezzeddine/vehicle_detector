@@ -19,7 +19,7 @@ topic = "features_message"
 # Generate a Client ID with the publish prefix.
 client_id = f'publish-{random.randint(0, 1000)}'
 
-class_names = ['car','truck','LP','Toyota','Volkswagen','Ford','Honda','Chevrolet','Nissan','BMW','Mercedes','Audi','Tesla','Hyundai','Kia','Mazda','Fiat','Jeep','Porsche','Volvo','Land Rover','Peugeot','Renault','Citroën','Isuzu','MAN','Iveco','Mitsubishi','Opel','Scoda','Mini','Ferrari','Lamborghini','Jaguar','Suzuki', 'Ibiza', 'Haval','GMC']
+class_names = ['car','truck','LP','Toyota','Volkswagen','Ford','Honda','Chevrolet','Nissan','BMW','Mercedes','Audi','Tesla','Hyundai','Kia','Mazda','Fiat','Jeep','Porsche','Volvo','Land Rover','Peugeot','Renault','Citroen','Isuzu','MAN','Iveco','Mitsubishi','Opel','Scoda','Mini','Ferrari','Lamborghini','Jaguar','Suzuki', 'Ibiza', 'Haval','GMC']
 
 
 def predict_car_color(image_to_cap):
@@ -153,17 +153,7 @@ def detect_screenshot_optimized(video_file):
                         fg_mask = bg_subtractor.apply(frame)  # Apply background subtraction
                         fg_mask = cv2.threshold(fg_mask, 120, 255, cv2.THRESH_BINARY)[1]  # Threshold the mask
                         contours, _ = cv2.findContours(fg_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)  # Find contours
-                        if len(contours) > 0:
-                            # Get the bounding box of the largest contour
-                            largest_contour = max(contours, key=cv2.contourArea)
-                            x, y, w, h = cv2.boundingRect(largest_contour)
-                            if w * h > area_threshold:  
-                            # Car has stopped, take a screenshot
-                                screenshot_filename = f"/home/pc/vehicle_detector/_{frame_number}.jpg"
-                                cv2.imwrite(screenshot_filename, frame)
-                                
-                                final_features.append(predict_car_color(screenshot_filename))
-                                os.remove(screenshot_filename)
+
                         for i in range(len(result)):
                             if result[i].boxes.cpu().numpy().cls == [          2]:
                                 cropped_LP_filename = f"/home/pc/vehicle_detector/LP_cropped{frame_number}"
@@ -174,8 +164,19 @@ def detect_screenshot_optimized(video_file):
                                     final_features[1]=LP
                                     general_nationality=predict_generic_nationality(cropped_LP_file)
                                     final_features.append(general_nationality)
-                                os.remove(cropped_LP_file)
-                        return final_features
+                                    os.remove(cropped_LP_file)
+                                    if len(contours) > 0:
+                                        # Get the bounding box of the largest contour
+                                        largest_contour = max(contours, key=cv2.contourArea)
+                                        x, y, w, h = cv2.boundingRect(largest_contour)
+                                        if w * h > area_threshold:  
+                                        # Car has stopped, take a screenshot
+                                            screenshot_filename = f"/home/pc/vehicle_detector/_{frame_number}.jpg"
+                                            cv2.imwrite(screenshot_filename, frame)
+                                            
+                                            final_features.append(predict_car_color(screenshot_filename))
+                                            os.remove(screenshot_filename)
+                                            return final_features
 
     finally:
         cap.release()
@@ -197,8 +198,8 @@ def features_to_json(file_path):
             {
                 "brand": values_list[2],
                 "class": values_list[0],  
-                "color": values_list[3][0],
-                "country": values_list[4],
+                "color": values_list[4][0],
+                "country": values_list[3],
                 "model": "unable to identify model",
                 "origin": "camera LPM",
                 "registration": values_list[1],  
