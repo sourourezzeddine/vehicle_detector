@@ -1,31 +1,29 @@
-import cv2
-import matplotlib.pyplot as plt
 import torch
 import json
 import uuid
 import os
+import cv2
+import easyocr
+import numpy as np
+import random
 from PIL import Image
 from torchvision import transforms
 from ultralytics import YOLO
-import numpy as np
-import random
 from paho.mqtt import client as mqtt_client
-import easyocr
-
-
-broker = 'localhost'
-port = 1883
-topic = "features_message"
-# Generate a Client ID with the publish prefix.
-client_id = f'publish-{random.randint(0, 1000)}'
-
-class_names = ['car','truck','LP','Toyota','Volkswagen','Ford','Honda','Chevrolet','Nissan','BMW','Mercedes','Audi','Tesla','Hyundai','Kia','Mazda','Fiat','Jeep','Porsche','Volvo','Land Rover','Peugeot','Renault','Citroen','Isuzu','MAN','Iveco','Mitsubishi','Opel','Scoda','Mini','Ferrari','Lamborghini','Jaguar','Suzuki', 'Ibiza', 'Haval','GMC']
-
 
 def predict_car_color(image_to_cap):
-    final_model = torch.load("/home/pc/vehicle_detector/final_model_85.t", map_location="cpu")
-    colors = ['Black', 'Blue', 'Brown', 'Green', 'Orange', 'Red', 'Silver', 'White', 'Yellow']
+    """
+    predicts the vehicle color.
 
+    Args:
+        path to the vehicle image.
+
+    Returns:
+        string: color of the vehicle.
+    """
+    final_model = torch.load("/home/pc/vehicle_detector/final_model_85.t", map_location="cpu")
+    # The possible colors that the model can predict
+    colors = ['Black', 'Blue', 'Brown', 'Green', 'Orange', 'Red', 'Silver', 'White', 'Yellow']
     # Define transformations for the input image
     transform = transforms.Compose([
         transforms.Resize(256),
@@ -44,12 +42,20 @@ def predict_car_color(image_to_cap):
         probabilities = torch.nn.functional.softmax(preds, dim=1)
         top_probability, top_class = probabilities.topk(1, dim=1)
 
-    # Get the predicted class name and its probability
+    # Get the predicted class name 
     car_color = colors[top_class.item()]
-    probability = top_probability.item()
-    return car_color, probability
+    return car_color 
 
 def read_license_plate(im):
+    """
+    reads the license plate content (language is set to english).
+
+    Args:
+        path to the license plate image.
+
+    Returns:
+        string: license plate text.
+    """
     license_plate_crop=cv2.imread(im)
     license_plate_crop_gray = cv2.cvtColor(license_plate_crop, cv2.COLOR_BGR2GRAY)
     _, license_plate_crop_thresh = cv2.threshold(license_plate_crop_gray, 64, 255, cv2.THRESH_BINARY_INV)
@@ -64,27 +70,46 @@ def read_license_plate(im):
     return lp_text
 
 def predict_generic_nationality(image_to_cap):
+    """
+    identifies the country out of the license plate.
+
+    Args:
+        path to the license plate image.
+
+    Returns:
+        string: country.
+        OR
+        "unable to identify country" if the model is unable to.
+    """
     final_model = YOLO("/home/pc/vehicle_detector/nationality_generic.pt")
     nationality = ['europe','america','qatar','tunisia','egypt','UAE','libya']
 
-    # Load and preprocess the input image
     image = cv2.imread(image_to_cap)
     results = final_model.predict(image)
-    
     class_ids=[]
     confidences=[]
     for result in results:
                 boxes = result.boxes.cpu().numpy()
                 confidences.append(boxes.conf)
                 class_ids.append(boxes.cls)
-                class_ids_array = np.concatenate(class_ids)
-    #return nationality
     if len(boxes) != 0:
         return nationality[int(boxes.cls[0])]
     else:
         return "unable to identify country"
-    
-def detect_screenshot_optimized(video_file): 
+
+# classes of best.pt model
+class_names = ['car','truck','LP','Toyota','Volkswagen','Ford','Honda','Chevrolet','Nissan','BMW','Mercedes','Audi','Tesla','Hyundai','Kia','Mazda','Fiat','Jeep','Porsche','Volvo','Land Rover','Peugeot','Renault','Citroen','Isuzu','MAN','Iveco','Mitsubishi','Opel','Scoda','Mini','Ferrari','Lamborghini','Jaguar','Suzuki', 'Ibiza', 'Haval','GMC']
+
+def detect_screenshot_optimized(video_file):
+    """
+    identifies the needed features of the vehicle.
+
+    Args:
+        path to a video or camera.
+
+    Returns:
+        list: final_features = [Vehicle type, Lp text, Brand, Country, Color].
+    """    
     model = YOLO("/home/pc/vehicle_detector/best.pt")
     cap = cv2.VideoCapture(0)  
     frame_number = 0
@@ -146,50 +171,55 @@ def detect_screenshot_optimized(video_file):
                             LP_found = True
                         elif 3 <= j <= 35 and result_dict[j] > 0.5:
                             Brand_found = True
-                    if car_found and LP_found and Brand_found:
+                    if car_found and LP_found and Brand_found: #if the vehicle and th ebrand and the lp are detected proceed to other tests
                         for feature in features:
                             final_features.append(class_names[feature])
                         # Check if the car has stopped by analyzing its movement
                         fg_mask = bg_subtractor.apply(frame)  # Apply background subtraction
                         fg_mask = cv2.threshold(fg_mask, 120, 255, cv2.THRESH_BINARY)[1]  # Threshold the mask
                         contours, _ = cv2.findContours(fg_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)  # Find contours
-
+                        # License plate recognition part
                         for i in range(len(result)):
                             if result[i].boxes.cpu().numpy().cls == [          2]:
                                 cropped_LP_filename = f"/home/pc/vehicle_detector/LP_cropped{frame_number}"
                                 cropped_LP_file = f"/home/pc/vehicle_detector/LP_cropped{frame_number}.jpg"
                                 result[i].save_crop("/home/pc/vehicle_detector/", cropped_LP_filename)
                                 LP=read_license_plate(cropped_LP_file)
-                                if len(LP)>3:
+                                if len(LP)<4:
+                                    os.remove(cropped_LP_file)
+                                elif len(LP)>3:
                                     final_features[1]=LP
                                     general_nationality=predict_generic_nationality(cropped_LP_file)
                                     final_features.append(general_nationality)
                                     os.remove(cropped_LP_file)
+                                    # Color identification part
                                     if len(contours) > 0:
                                         # Get the bounding box of the largest contour
                                         largest_contour = max(contours, key=cv2.contourArea)
                                         x, y, w, h = cv2.boundingRect(largest_contour)
                                         if w * h > area_threshold:  
-                                        # Car has stopped, take a screenshot
                                             screenshot_filename = f"/home/pc/vehicle_detector/_{frame_number}.jpg"
-                                            cv2.imwrite(screenshot_filename, frame)
-                                            
+                                            cv2.imwrite(screenshot_filename, frame)                                           
                                             final_features.append(predict_car_color(screenshot_filename))
                                             os.remove(screenshot_filename)
                                             return final_features
-
     finally:
         cap.release()
+
+broker = 'localhost'
+port = 1883
+topic = "features_message"
+# Generate a Client ID with the publish prefix.
+client_id = f'publish-{random.randint(0, 1000)}'
 
 def connect_mqtt():
     client = mqtt_client.Client(client_id)
     client.connect(broker, port)
     return client
 
-
 def features_to_json(file_path):
     values_list = detect_screenshot_optimized(file_path)
-    uid = str(uuid.uuid4())
+    uid = str(uuid.uuid4()) # Generating a random UUID for uid
     
     json_data = {
         "activity": "Monitoring",
@@ -198,17 +228,17 @@ def features_to_json(file_path):
             {
                 "brand": values_list[2],
                 "class": values_list[0],  
-                "color": values_list[4][0],
+                "color": values_list[4],
                 "country": values_list[3],
                 "model": "unable to identify model",
                 "origin": "camera LPM",
                 "registration": values_list[1],  
-                "uid": uid  # Generating a random UUID for uid
+                "uid": uid  
             }
         ],
         "code": "1002",
         "from": "Public",
-        "registration": values_list[1],  # Taking 'LP' from the tuple in the list
+        "registration": values_list[1],  
         "to": "Parc",
         "uidpassage": uid
     }
