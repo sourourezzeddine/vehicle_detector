@@ -23,7 +23,7 @@ class_names = ['car','truck','LP','Toyota','Volkswagen','Ford','Honda','Chevrole
 
 
 def predict_car_color(image_to_cap):
-    final_model = torch.load("/home/pc/Documents/final_model_85.t", map_location="cpu")
+    final_model = torch.load("/home/pc/vehicle_detector/final_model_85.t", map_location="cpu")
     colors = ['Black', 'Blue', 'Brown', 'Green', 'Orange', 'Red', 'Silver', 'White', 'Yellow']
 
     # Define transformations for the input image
@@ -63,8 +63,27 @@ def read_license_plate(im):
         lp_text+=text.upper()
     return lp_text
 
+def predict_generic_nationality(image_to_cap):
+    final_model = YOLO("/home/pc/vehicle_detector/nationality_generic.pt")
+    nationality = ['europe','america','qatar','tunisia','egypt','UAE','libya']
 
-
+    # Load and preprocess the input image
+    image = cv2.imread(image_to_cap)
+    results = final_model.predict(image)
+    
+    class_ids=[]
+    confidences=[]
+    for result in results:
+                boxes = result.boxes.cpu().numpy()
+                confidences.append(boxes.conf)
+                class_ids.append(boxes.cls)
+                class_ids_array = np.concatenate(class_ids)
+    #return nationality
+    if len(boxes) != 0:
+        return nationality[int(boxes.cls[0])]
+    else:
+        return "unable to identify country"
+    
 def detect_screenshot_optimized(video_file): 
     model = YOLO("/home/pc/vehicle_detector/best.pt")
     cap = cv2.VideoCapture(0)  
@@ -147,13 +166,14 @@ def detect_screenshot_optimized(video_file):
                                 os.remove(screenshot_filename)
                         for i in range(len(result)):
                             if result[i].boxes.cpu().numpy().cls == [          2]:
-                                cropped_LP_filename = f'/home/pc/Documents/runs/detect/screenshot/LP_cropped{frame_number}'
-                                cropped_LP_file = f'/home/pc/Documents/runs/detect/screenshot/LP_cropped{frame_number}.jpg'
-                                result[i].save_crop('/home/pc/Documents/runs/detect/screenshot/', cropped_LP_filename)
+                                cropped_LP_filename = f"/home/pc/vehicle_detector/LP_cropped{frame_number}"
+                                cropped_LP_file = f"/home/pc/vehicle_detector/LP_cropped{frame_number}.jpg"
+                                result[i].save_crop("/home/pc/vehicle_detector/", cropped_LP_filename)
                                 LP=read_license_plate(cropped_LP_file)
                                 if len(LP)>3:
-                                        final_features[1]=LP
-                        
+                                    final_features[1]=LP
+                                    general_nationality=predict_generic_nationality(cropped_LP_file)
+                                    final_features.append(general_nationality)
                                 os.remove(cropped_LP_file)
                         return final_features
 
@@ -167,7 +187,6 @@ def connect_mqtt():
 
 
 def features_to_json(file_path):
-    # Your existing code
     values_list = detect_screenshot_optimized(file_path)
     uid = str(uuid.uuid4())
     
@@ -179,7 +198,7 @@ def features_to_json(file_path):
                 "brand": values_list[2],
                 "class": values_list[0],  
                 "color": values_list[3][0],
-                "country": "France",
+                "country": values_list[4],
                 "model": "unable to identify model",
                 "origin": "camera LPM",
                 "registration": values_list[1],  
