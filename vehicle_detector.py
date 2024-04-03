@@ -140,9 +140,9 @@ def detect_screenshot_optimized(video_file):
                 
                 if len(result_dict) > 2:
                     for j in result_dict.keys():
-                        if j in [0, 1] and result_dict[j] > 0.5:  
+                        if j in [0, 1] and result_dict[j] > 0.3:  
                             car_found = True
-                        elif j == 2 and result_dict[j] > 0.65:
+                        elif j == 2 and result_dict[j] > 0.5:
                             LP_found = True
                         elif 3 <= j <= 35 and result_dict[j] > 0.5:
                             Brand_found = True
