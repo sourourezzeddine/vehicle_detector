@@ -75,7 +75,10 @@ def predict_car_color(image_to_cap):
 
     #! Get the predicted class name 
     car_color = colors[top_class.item()]
-    return car_color 
+    if len(car_color) != 0:
+        return car_color 
+    else:
+        return "silver"
 
 def read_license_plate(im):
     """! reads the license plate content (language is set to english).
@@ -136,8 +139,6 @@ def detect_screenshot_optimized(video_file):
 
     while True:
         ret, frame = cap.read()
-        if not ret:
-            break
         frame_number += 1
         results = model.predict(frame)
 
@@ -164,19 +165,19 @@ def detect_screenshot_optimized(video_file):
             result_dict = dict(sorted(result_dict.items()))
 
             if len(result_dict)>3: 
-                    class_ids_list = list(result_dict.keys())
-                    if class_ids_list[0]=='0' and class_ids_list[1]=='1': #if both a car and a truck are detected, keep the one with the higher confidence
-                        if result_dict['0']> result_dict['1']:
-                            del result_dict['1']
-                        else:
-                            del result_dict['0']
+                class_ids_list = list(result_dict.keys())
+                if class_ids_list[0]=='0' and class_ids_list[1]=='1': #if both a car and a truck are detected, keep the one with the higher confidence
+                    if result_dict['0']> result_dict['1']:
+                        del result_dict['1']
+                    else:
+                        del result_dict['0']
+                class_ids_list1 = list(result_dict.keys())
+                while len(result_dict)>3:  #choose the brand with the higher confidence
+                    if result_dict[class_ids_list1[-1]]>result_dict[class_ids_list1[-2]]:
+                        del result_dict[class_ids_list1[-2]]
+                    else:
+                        del result_dict[class_ids_list1[-1]]
                     class_ids_list1 = list(result_dict.keys())
-                    while len(result_dict)>3:  #choose the brand with the higher confidence
-                        if result_dict[class_ids_list1[-1]]>result_dict[class_ids_list1[-2]]:
-                            del result_dict[class_ids_list1[-2]]
-                        else:
-                            del result_dict[class_ids_list1[-1]]
-                        class_ids_list1 = list(result_dict.keys())
 
             features = list(result_dict.keys())
             final_features=[]
