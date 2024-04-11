@@ -11,6 +11,18 @@
 # @section libraries_vehicle_detector Libraries/Modules
 # - random standard library (https://docs.python.org/3/library/random.html)
 #   - Access to randint function.
+# - PyTorch library (https://pytorch.org/)
+# - JSON encoding and decoding (https://docs.python.org/3/library/json.html)
+# - UUID objects according to RFC 4122 (https://docs.python.org/3/library/uuid.html)
+# - Miscellaneous operating system interfaces (https://docs.python.org/3/library/os.html)
+# - OpenCV (https://docs.opencv.org/4.x/index.html)
+# - EasyOCR library for Optical Character Recognition (OCR) (https://github.com/JaidedAI/EasyOCR)
+# - NumPy for numerical computing (https://numpy.org/)
+# - Python Imaging Library (PIL) (https://pillow.readthedocs.io/en/stable/)
+# - TorchVision for computer vision tasks with PyTorch (https://pytorch.org/vision/stable/index.html)
+# - Ultralytics YOLO (You Only Look Once) object detection (https://github.com/ultralytics/ultralytics)
+# - Eclipse Paho MQTT Python client (https://www.eclipse.org/paho/index.php?page=clients/python/index.php)
+#
 #
 # @section notes_vehicle_detector Notes
 # - Comments are Doxygen compatible.
@@ -18,7 +30,7 @@
 # @section todo_vehicle_detector TODO
 # - a minor work is still needed on the european countries.
 #
-# Imports
+# 
 import torch
 import json
 import uuid
