@@ -1,3 +1,24 @@
+"""! @brief A Python program that identifies specific features of a given vehicle."""
+##
+# @mainpage Vehicle Recognition  Project
+#
+# @section vehicle_detector Description
+# A Python program that detects vehicles entering a parking lot, 
+# identifies their types (car/truck), brands, colors, registrations, and nationalities 
+##
+# @file vehicle_detector.py
+#
+# @section libraries_vehicle_detector Libraries/Modules
+# - random standard library (https://docs.python.org/3/library/random.html)
+#   - Access to randint function.
+#
+# @section notes_vehicle_detector Notes
+# - Comments are Doxygen compatible.
+#
+# @section todo_vehicle_detector TODO
+# - a minor work is still needed on the european countries.
+#
+# Imports
 import torch
 import json
 import uuid
@@ -11,15 +32,13 @@ from torchvision import transforms
 from ultralytics import YOLO
 from paho.mqtt import client as mqtt_client
 
+# Functions
 def predict_car_color(image_to_cap):
-    """
-    predicts the vehicle color.
+    """! predicts the vehicle color.
 
-    Args:
-        path to the vehicle image.
+    @param image_to_cap  path to the vehicle image.
 
-    Returns:
-        string: color of the vehicle.
+    @return color of the vehicle.
     """
     final_model = torch.load("/home/pc/vehicle_detector/final_model_85.t", map_location="cpu")
     # The possible colors that the model can predict
@@ -47,14 +66,11 @@ def predict_car_color(image_to_cap):
     return car_color 
 
 def read_license_plate(im):
-    """
-    reads the license plate content (language is set to english).
+    """! reads the license plate content (language is set to english).
 
-    Args:
-        path to the license plate image.
+    @param image_to_cap  path to the license plate image.
 
-    Returns:
-        string: license plate text.
+    @return license plate text.
     """
     license_plate_crop=cv2.imread(im)
     license_plate_crop_gray = cv2.cvtColor(license_plate_crop, cv2.COLOR_BGR2GRAY)
@@ -70,16 +86,11 @@ def read_license_plate(im):
     return lp_text
 
 def predict_generic_nationality(image_to_cap):
-    """
-    identifies the country out of the license plate.
+    """! identifies the country out of the license plate.
 
-    Args:
-        path to the license plate image.
+    @param image_to_cap path to the license plate image.
 
-    Returns:
-        string: country.
-        OR
-        "unable to identify country" if the model is unable to.
+    @return the country name OR "america" as a default value.
     """
     final_model = YOLO("/home/pc/vehicle_detector/nationality_generic.pt")
     nationality = ['europe','america','qatar','tunisia','egypt','UAE','libya']
@@ -95,20 +106,16 @@ def predict_generic_nationality(image_to_cap):
     if len(boxes) != 0:
         return nationality[int(boxes.cls[0])]
     else:
-        return "unable to identify country"
-
-# classes of best.pt model
+        return "america"
+   
 class_names = ['car','truck','LP','Toyota','Volkswagen','Ford','Honda','Chevrolet','Nissan','BMW','Mercedes','Audi','Tesla','Hyundai','Kia','Mazda','Fiat','Jeep','Porsche','Volvo','Land Rover','Peugeot','Renault','Citroen','Isuzu','MAN','Iveco','Mitsubishi','Opel','Scoda','Mini','Ferrari','Lamborghini','Jaguar','Suzuki', 'Ibiza', 'Haval','GMC']
 
 def detect_screenshot_optimized(video_file):
-    """
-    identifies the needed features of the vehicle.
+    """! identifies the needed features of the vehicle.
 
-    Args:
-        path to a video or camera.
+    @param video_file path to a video or camera.
 
-    Returns:
-        list: final_features = [Vehicle type, Lp text, Brand, Country, Color].
+    @return list of final_features = [Vehicle type, Lp text, Brand, Country, Color].
     """    
     model = YOLO("/home/pc/vehicle_detector/best.pt")
     cap = cv2.VideoCapture(0)  
@@ -147,7 +154,7 @@ def detect_screenshot_optimized(video_file):
 
                 if len(result_dict)>3: 
                             class_ids_list = list(result_dict.keys())
-                            if class_ids_list[0]=='0' and class_ids_list[1]=='1': #if the model detects both a car and a truck, it returns the one with the higher confidence
+                            if class_ids_list[0]=='0' and class_ids_list[1]=='1': #if both a car and a truck are detected, keep the one with the higher confidence
                                 if result_dict['0']> result_dict['1']:
                                     del result_dict['1']
                                 else:
@@ -206,6 +213,7 @@ def detect_screenshot_optimized(video_file):
     finally:
         cap.release()
 
+# Global Constants for the MQTT part
 broker = 'localhost'
 port = 1883
 topic = "features_message"
@@ -213,11 +221,18 @@ topic = "features_message"
 client_id = f'publish-{random.randint(0, 1000)}'
 
 def connect_mqtt():
+    """! connects to MQTT"""
     client = mqtt_client.Client(client_id)
     client.connect(broker, port)
     return client
 
 def features_to_json(file_path):
+    """! organizes the identified features of the vehicel into a json message.
+
+    @param file_path path to the video or camera.
+
+    @return a json message.
+    """   
     values_list = detect_screenshot_optimized(file_path)
     uid = str(uuid.uuid4()) # Generating a random UUID for uid
     
@@ -248,10 +263,10 @@ def features_to_json(file_path):
     result = connect_mqtt().publish("features_message", json_message)
 
 def run():
+    """! sends the json message using MQTT"""
     client = connect_mqtt()
     client.loop_start()
     while True:
         features_to_json('/home/pc/Downloads/4.webm') 
 
-if __name__ == '__main__':
-    run()
+run()
