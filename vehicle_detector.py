@@ -63,7 +63,7 @@ def predict_car_color(image_to_cap):
         transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
     ])
 
-    #! Load and preprocess the input image
+    # Load and preprocess the input image
     image = Image.open(image_to_cap).convert('RGB')
     image = transform(image).unsqueeze(0)
 
@@ -92,7 +92,7 @@ def read_license_plate(im):
     _, license_plate_crop_thresh = cv2.threshold(license_plate_crop_gray, 64, 255, cv2.THRESH_BINARY_INV)
     reader = easyocr.Reader(['en'], gpu=False)
     detections = reader.readtext(license_plate_crop)
-    #! Sort the OCR results by bounding box area and x-coordinate
+    # Sort the OCR results by bounding box area and x-coordinate
     sorted_results = sorted(detections, key=lambda x: x[0][0][0])
     lp_text=''
     for detection in sorted_results:
@@ -135,10 +135,13 @@ def detect_screenshot_optimized(video_file):
     model = YOLO("/home/pc/vehicle_detector/best.pt")
     cap = cv2.VideoCapture(0)  
     frame_number = 0
-    bg_subtractor = cv2.createBackgroundSubtractorMOG2()  #! Create background subtractor object
+    bg_subtractor = cv2.createBackgroundSubtractorMOG2()  # Create background subtractor object
 
     while True:
         ret, frame = cap.read()
+        if not ret:
+            raise Exception("Error: Frame could not be read.")
+
         frame_number += 1
         results = model.predict(frame)
 
@@ -166,13 +169,13 @@ def detect_screenshot_optimized(video_file):
 
             if len(result_dict)>3: 
                 class_ids_list = list(result_dict.keys())
-                if class_ids_list[0]=='0' and class_ids_list[1]=='1': #if both a car and a truck are detected, keep the one with the higher confidence
+                if class_ids_list[0]=='0' and class_ids_list[1]=='1': # if both a car and a truck are detected, keep the one with the higher confidence
                     if result_dict['0']> result_dict['1']:
                         del result_dict['1']
                     else:
                         del result_dict['0']
                 class_ids_list1 = list(result_dict.keys())
-                while len(result_dict)>3:  #choose the brand with the higher confidence
+                while len(result_dict)>3:  # choose the brand with the higher confidence
                     if result_dict[class_ids_list1[-1]]>result_dict[class_ids_list1[-2]]:
                         del result_dict[class_ids_list1[-2]]
                     else:
@@ -184,20 +187,19 @@ def detect_screenshot_optimized(video_file):
             
             if len(result_dict) > 2:
                 for j in result_dict.keys():
-                    if j in [0, 1] and result_dict[j] > 0.3:  
+                    if j in [0, 1] and result_dict[j] > 0.1:  
                         car_found = True
                     elif j == 2 and result_dict[j] > 0.5:
                         LP_found = True
                     elif 3 <= j <= 35 and result_dict[j] > 0.5:
                         Brand_found = True
-                if car_found and LP_found and Brand_found: #if the vehicle and the brand and the lp are detected proceed to other tests
+                if car_found and LP_found and Brand_found: # if the vehicle and the brand and the lp are detected proceed to other tests
                     for feature in features:
                         final_features.append(class_names[feature])
-                    #! Check if the car has stopped by analyzing its movement
                     fg_mask = bg_subtractor.apply(frame)  # Apply background subtraction
                     fg_mask = cv2.threshold(fg_mask, 120, 255, cv2.THRESH_BINARY)[1]  # Threshold the mask
                     contours, _ = cv2.findContours(fg_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)  # Find contours
-                    #! License plate recognition part
+                    # License plate recognition part
                     for i in range(len(result)):
                         if result[i].boxes.cpu().numpy().cls == [          2]:
                             cropped_LP_filename = f"/home/pc/vehicle_detector/LP_cropped{frame_number}"
@@ -211,7 +213,7 @@ def detect_screenshot_optimized(video_file):
                                 general_nationality=predict_generic_nationality(cropped_LP_file)
                                 final_features.append(general_nationality)
                                 os.remove(cropped_LP_file)
-                                #! Color identification part
+                                # Color identification part
                                 if len(contours) > 0:
                                     largest_contour = max(contours, key=cv2.contourArea)
                                     x, y, w, h = cv2.boundingRect(largest_contour)
@@ -223,11 +225,11 @@ def detect_screenshot_optimized(video_file):
                                         return final_features
 
 
-#! Global Constants for the MQTT part
+# Global Constants for the MQTT part
 broker = 'localhost'
 port = 1883
 topic = "features_message"
-#! Generate a Client ID with the publish prefix.
+# Generate a Client ID with the publish prefix.
 client_id = f'publish-{random.randint(0, 1000)}'
 
 def connect_mqtt():
@@ -268,7 +270,7 @@ def features_to_json(file_path):
         "uidpassage": uid
     }
 
-    #! Convert the dictionary to a JSON string
+    # Convert the dictionary to a JSON string
     json_message = json.dumps(json_data, indent=4)
     result = connect_mqtt().publish("features_message", json_message)
 
