@@ -1,0 +1,105 @@
+\doxysection{integration\+\_\+test Namespace Reference}
+\hypertarget{namespaceintegration__test}{}\label{namespaceintegration__test}\index{integration\_test@{integration\_test}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespaceintegration__test_ac213da4c5797e7e7d37390d98eef0e65}{create\+\_\+test\+\_\+images}} ()
+\item 
+\mbox{\hyperlink{namespaceintegration__test_a83ede27084087ac0715ff3a0fd533442}{test\+\_\+analyze\+\_\+folder}} (\mbox{\hyperlink{namespaceintegration__test_ac213da4c5797e7e7d37390d98eef0e65}{create\+\_\+test\+\_\+images}})
+\item 
+\mbox{\hyperlink{namespaceintegration__test_a19219512c99e5965ed29537a978e1af2}{test\+\_\+extract\+\_\+text\+\_\+from\+\_\+images}} (\mbox{\hyperlink{namespaceintegration__test_ac213da4c5797e7e7d37390d98eef0e65}{create\+\_\+test\+\_\+images}})
+\item 
+\mbox{\hyperlink{namespaceintegration__test_acbacc8102a8a6ab590495457f5383ab3}{test\+\_\+get\+\_\+country\+\_\+from\+\_\+text}} ()
+\item 
+\mbox{\hyperlink{namespaceintegration__test_a36723e7723dd051b96092d201ae3caa3}{test\+\_\+save\+\_\+to\+\_\+csv}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespaceintegration__test_ac213da4c5797e7e7d37390d98eef0e65}\label{namespaceintegration__test_ac213da4c5797e7e7d37390d98eef0e65} 
+\index{integration\_test@{integration\_test}!create\_test\_images@{create\_test\_images}}
+\index{create\_test\_images@{create\_test\_images}!integration\_test@{integration\_test}}
+\doxysubsubsection{\texorpdfstring{create\_test\_images()}{create\_test\_images()}}
+{\footnotesize\ttfamily create\+\_\+test\+\_\+images (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Fixture function to create temporary test images.
+
+This function creates temporary test images in a temporary directory.
+
+Returns:
+    list: List of paths to the created test images.
+\end{DoxyVerb}
+ \Hypertarget{namespaceintegration__test_a83ede27084087ac0715ff3a0fd533442}\label{namespaceintegration__test_a83ede27084087ac0715ff3a0fd533442} 
+\index{integration\_test@{integration\_test}!test\_analyze\_folder@{test\_analyze\_folder}}
+\index{test\_analyze\_folder@{test\_analyze\_folder}!integration\_test@{integration\_test}}
+\doxysubsubsection{\texorpdfstring{test\_analyze\_folder()}{test\_analyze\_folder()}}
+{\footnotesize\ttfamily test\+\_\+analyze\+\_\+folder (\begin{DoxyParamCaption}\item[{}]{create\+\_\+test\+\_\+images }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Test the analyze_folder function.
+
+This test function checks if the analyze_folder function correctly analyzes a folder
+and returns a list of paths to the files within that folder.
+
+Args:
+    create_test_images: Fixture providing the paths to the temporary test images.
+
+Returns:
+    None
+
+Raises:
+    AssertionError: If the function does not return the expected result.
+\end{DoxyVerb}
+ \Hypertarget{namespaceintegration__test_a19219512c99e5965ed29537a978e1af2}\label{namespaceintegration__test_a19219512c99e5965ed29537a978e1af2} 
+\index{integration\_test@{integration\_test}!test\_extract\_text\_from\_images@{test\_extract\_text\_from\_images}}
+\index{test\_extract\_text\_from\_images@{test\_extract\_text\_from\_images}!integration\_test@{integration\_test}}
+\doxysubsubsection{\texorpdfstring{test\_extract\_text\_from\_images()}{test\_extract\_text\_from\_images()}}
+{\footnotesize\ttfamily test\+\_\+extract\+\_\+text\+\_\+from\+\_\+images (\begin{DoxyParamCaption}\item[{}]{create\+\_\+test\+\_\+images }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Test the extract_text_from_images function.
+
+This test function checks if the extract_text_from_images function correctly extracts text
+from a list of image files.
+
+Args:
+    create_test_images: Fixture providing the paths to the temporary test images.
+
+Returns:
+    None
+
+Raises:
+    AssertionError: If the function does not return the expected result.
+\end{DoxyVerb}
+ \Hypertarget{namespaceintegration__test_acbacc8102a8a6ab590495457f5383ab3}\label{namespaceintegration__test_acbacc8102a8a6ab590495457f5383ab3} 
+\index{integration\_test@{integration\_test}!test\_get\_country\_from\_text@{test\_get\_country\_from\_text}}
+\index{test\_get\_country\_from\_text@{test\_get\_country\_from\_text}!integration\_test@{integration\_test}}
+\doxysubsubsection{\texorpdfstring{test\_get\_country\_from\_text()}{test\_get\_country\_from\_text()}}
+{\footnotesize\ttfamily test\+\_\+get\+\_\+country\+\_\+from\+\_\+text (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Test the get_country_from_text function.
+
+This test function checks if the get_country_from_text function correctly identifies the country
+mentioned in a given text.
+
+Returns:
+    None
+
+Raises:
+    AssertionError: If the function does not return the expected result.
+\end{DoxyVerb}
+ \Hypertarget{namespaceintegration__test_a36723e7723dd051b96092d201ae3caa3}\label{namespaceintegration__test_a36723e7723dd051b96092d201ae3caa3} 
+\index{integration\_test@{integration\_test}!test\_save\_to\_csv@{test\_save\_to\_csv}}
+\index{test\_save\_to\_csv@{test\_save\_to\_csv}!integration\_test@{integration\_test}}
+\doxysubsubsection{\texorpdfstring{test\_save\_to\_csv()}{test\_save\_to\_csv()}}
+{\footnotesize\ttfamily test\+\_\+save\+\_\+to\+\_\+csv (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Test the save_to_csv function.
+
+This test function checks if the save_to_csv function correctly saves data to a CSV file.
+
+Returns:
+    None
+
+Raises:
+    AssertionError: If the function does not save the data correctly.
+\end{DoxyVerb}
+ 

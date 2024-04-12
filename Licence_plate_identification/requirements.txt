@@ -1,0 +1,12 @@
+#Necessary packages to be installed in the virtuel env
+easyocr
+imutils
+Pillow
+gradio
+Pillow==9.5.0
+numpy
+pandas
+csv
+pytest
+
+

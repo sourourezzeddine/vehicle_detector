@@ -1,0 +1,29 @@
+\doxysection{folder\+\_\+parser Namespace Reference}
+\hypertarget{namespacefolder__parser}{}\label{namespacefolder__parser}\index{folder\_parser@{folder\_parser}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacefolder__parser_a29e70050e2aaa588e976c8bd785cce67}{analyze\+\_\+folder}} (folder\+\_\+path)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacefolder__parser_a29e70050e2aaa588e976c8bd785cce67}\label{namespacefolder__parser_a29e70050e2aaa588e976c8bd785cce67} 
+\index{folder\_parser@{folder\_parser}!analyze\_folder@{analyze\_folder}}
+\index{analyze\_folder@{analyze\_folder}!folder\_parser@{folder\_parser}}
+\doxysubsubsection{\texorpdfstring{analyze\_folder()}{analyze\_folder()}}
+{\footnotesize\ttfamily analyze\+\_\+folder (\begin{DoxyParamCaption}\item[{}]{folder\+\_\+path }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Analyze the contents of a folder and extract filenames of images.
+
+This function scans the specified folder for image files with common extensions (.jpg, .jpeg, .png, .bmp).
+It then returns a list of filenames of images found in the folder.
+
+:param folder_path: Path to the folder containing images.
+:type folder_path: str
+:return: A list of filenames of images found in the folder.
+:rtype: list[str]
+
+:raises OSError: If the specified folder does not exist or cannot be accessed.
+\end{DoxyVerb}
+ 
