@@ -224,11 +224,13 @@ def detect_screenshot_optimized(video_file):
                                         os.remove(screenshot_filename)
                                         return final_features
 
+with open('MQTT_config.json') as f:
+    config = json.load(f)
 
 # Global Constants for the MQTT part
-broker = 'localhost'
-port = 1883
-topic = "features_message"
+broker = config['broker_address']
+port = config['port']
+topic = config['topic']
 # Generate a Client ID with the publish prefix.
 client_id = f'publish-{random.randint(0, 1000)}'
 
