@@ -1,0 +1,7 @@
+{
+    "broker_address": "localhost",
+    "port": 1883,
+    "topic": "features_message"
+
+}
+
