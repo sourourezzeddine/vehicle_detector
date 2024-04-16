@@ -44,6 +44,9 @@ from torchvision import transforms
 from ultralytics import YOLO
 from paho.mqtt import client as mqtt_client
 
+with open('vehicle_det_config.json') as f:
+    vehicle_det_config = json.load(f)
+
 # Functions
 def predict_car_color(image_to_cap):
     """! predicts the vehicle color.
@@ -52,7 +55,7 @@ def predict_car_color(image_to_cap):
 
     @return color of the vehicle.
     """
-    final_model = torch.load("/home/pc/vehicle_detector/final_model_85.t", map_location="cpu")
+    final_model = torch.load(vehicle_det_config['color_model'], map_location="cpu")
     # list of the colors that the color model predicts
     colors = ['Black', 'Blue', 'Brown', 'Green', 'Orange', 'Red', 'Silver', 'White', 'Yellow']
     # Define transformations for the input image
@@ -107,7 +110,7 @@ def predict_generic_nationality(image_to_cap):
 
     @return the country name OR "america" as a default value.
     """
-    final_model = YOLO("/home/pc/vehicle_detector/nationality_generic.pt")
+    final_model = YOLO(vehicle_det_config['generic_nationality_model'])
     nationality = ['europe','america','qatar','tunisia','egypt','UAE','libya']
 
     image = cv2.imread(image_to_cap)
@@ -132,7 +135,7 @@ def detect_screenshot_optimized(video_file):
 
     @return list of final_features = [Vehicle type, Lp text, Brand, Country, Color].
     """    
-    model = YOLO("/home/pc/vehicle_detector/best.pt")
+    model = YOLO(vehicle_det_config['general_features_model'])
     cap = cv2.VideoCapture(0)  
     frame_number = 0
     bg_subtractor = cv2.createBackgroundSubtractorMOG2()  # Create background subtractor object
@@ -202,6 +205,7 @@ def detect_screenshot_optimized(video_file):
                     # License plate recognition part
                     for i in range(len(result)):
                         if result[i].boxes.cpu().numpy().cls == [          2]:
+                            # change these directories to match your current directories 
                             cropped_LP_filename = f"/home/pc/vehicle_detector/LP_cropped{frame_number}"
                             cropped_LP_file = f"/home/pc/vehicle_detector/LP_cropped{frame_number}.jpg"
                             result[i].save_crop("/home/pc/vehicle_detector/", cropped_LP_filename)
