@@ -172,7 +172,7 @@ def detect_screenshot_optimized(video_file):
 
             if len(result_dict)>3: 
                 class_ids_list = list(result_dict.keys())
-                if class_ids_list[0]=='0' and class_ids_list[1]=='1': # if both a car and a truck are detected, keep the one with the higher confidence
+                if class_ids_list[0]=='0' and class_ids_list[1]=='1': # if the model is unable to decide whether it's a car or a truck, the one with the higher confidence is gonna be kept
                     if result_dict['0']> result_dict['1']:
                         del result_dict['1']
                     else:
