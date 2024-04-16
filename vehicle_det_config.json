@@ -1,0 +1,5 @@
+{
+    "color_model" : "/home/pc/vehicle_detector/final_model_85.t",
+    "generic_nationality_model" : "/home/pc/vehicle_detector/nationality_generic.pt",
+    "general_features_model" : "/home/pc/vehicle_detector/best.pt"
+}
