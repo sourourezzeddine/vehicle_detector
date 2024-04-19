@@ -1,3 +1,4 @@
+"""! @brief module responsible for launching video/camera, and applying the general features model."""
 from ultralytics import YOLO
 import cv2
 import json
@@ -12,7 +13,7 @@ except :
 
 
 def initialize_components(path):
-    """!Initializes necessary components for object detection.
+    """Initializes necessary components for object detection.
 
     @return A tuple containing multiple values: 
         - model 
@@ -27,7 +28,7 @@ def initialize_components(path):
     return model, cap, frame_number, bg_subtractor
 
 def object_detection_loop(model, cap):
-    """!Perform object detection on video frames.
+    """Perform object detection on video frames.
 
     @param the yolo model that identifies the general features (car/truck, lp, and brand) and cap.
 
