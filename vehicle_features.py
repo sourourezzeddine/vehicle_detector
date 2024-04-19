@@ -1,10 +1,10 @@
+"""! @brief module responsible for collecting all the vehicle's features into one list."""
 import numpy as np
-
 
 class_names = ['car','truck','LP','Toyota','Volkswagen','Ford','Honda','Chevrolet','Nissan','BMW','Mercedes','Audi','Tesla','Hyundai','Kia','Mazda','Fiat','Jeep','Porsche','Volvo','Land Rover','Peugeot','Renault','Citroen','Isuzu','MAN','Iveco','Mitsubishi','Opel','Scoda','Mini','Ferrari','Lamborghini','Jaguar','Suzuki', 'Ibiza', 'Haval','GMC']
 
 def filter_process_objects(results):
-    """!Filters and processes detected objects.
+    """Filters and processes detected objects.
 
     @param the results of the yolo general features model.
 
