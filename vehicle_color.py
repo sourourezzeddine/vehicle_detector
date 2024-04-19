@@ -1,3 +1,5 @@
+"""! @brief module responsible for identifying the vehicles color."""
+
 import torch
 from torchvision import transforms
 from PIL import Image
@@ -14,7 +16,7 @@ except :
 
 # Functions
 def predict_car_color(image_to_cap):
-    """! predicts the vehicle color.
+    """predicts the vehicle color.
 
     @param image_to_cap  path to the vehicle image.
 
@@ -49,7 +51,7 @@ def predict_car_color(image_to_cap):
         return "silver"
 
 def identify_vehicle_color(frame, contours, area_threshold, frame_number):
-    """!Identify the color of the current vehicle.
+    """Identify the color of the current vehicle.
 
     @param frame image array that represents the captured frame.
     @param contours A list of contours detected in the frame using OpenCV's contour detection algorithms.
