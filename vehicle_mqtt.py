@@ -1,3 +1,5 @@
+"""! @brief module responsible for connecting to mqtt broker and sending the json message."""
+
 import json
 import random
 from paho.mqtt import client as mqtt_client
@@ -23,7 +25,7 @@ def connect_mqtt():
     return client
 
 def features_to_json(features_list):
-    """! organizes the identified features of the vehicle into a json message.
+    """organizes the identified features of the vehicle into a json message.
 
     @param file_path path to the video or camera.
 
@@ -59,7 +61,7 @@ def features_to_json(features_list):
     connect_mqtt().publish("features_message", json_message)
 
 def run(features_list):
-    """! sends the json message using MQTT"""
+    """ sends the json message using MQTT"""
     client = connect_mqtt()
     client.loop_start()
     features_to_json(features_list) 
