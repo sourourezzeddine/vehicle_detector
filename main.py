@@ -1,4 +1,4 @@
-"""! @brief A Python program that identifies specific features of a given vehicle."""
+"""! @brief main function."""
 ##
 # @mainpage Vehicle Recognition  Project
 #
@@ -6,7 +6,7 @@
 # A Python program that detects vehicles entering a parking lot, 
 # identifies their types (car/truck), brands, colors, registrations, and nationalities 
 ##
-# @file vehicle_detector.py
+# @file main.py
 #
 # @section libraries_vehicle_detector Libraries/Modules
 # - random standard library (https://docs.python.org/3/library/random.html)
@@ -49,10 +49,13 @@ file_path = vehicle_det_config['video_path']
 
 def final_features_optimized(video_file):
     """!Identifies the needed features of the vehicle.
+
+    This function extracts final features from a video file, including car/truck, LP, brand detection,
+    license plate recognition,  and color identification.
     
-     @param the video's path or webcam.
+    @param video_file the video's path or webcam.
     
-    @return all the required features in a list in the following form ['car'/'truck', 'LP', 'brand' , 'nationality' , 'color']
+    @return final_features all the required features in a list in the following form ['car'/'truck', 'LP', 'brand' , 'nationality' , 'color']
     """
     # Initialize components
     model, cap, frame_number, bg_subtractor = vehicle_initialize_detection.initialize_components(file_path)
