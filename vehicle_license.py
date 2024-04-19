@@ -1,3 +1,4 @@
+"""! @brief module responsible for identifying license plate's content and nationality."""
 import os
 import cv2
 import easyocr
@@ -32,7 +33,7 @@ def read_license_plate(im):
     return lp_text
 
 def predict_generic_nationality(image_to_cap):
-    """! identifies the country out of the license plate.
+    """identifies the country out of the license plate.
 
     @param image_to_cap path to the license plate image.
 
@@ -55,7 +56,7 @@ def predict_generic_nationality(image_to_cap):
         return "america"
 
 def recognize_license_plate(results, frame_number):
-    """!Recognizes license plate and predict nationality.
+    """Recognizes license plate and predict nationality.
 
     @param the results of the general features model, frame_number.
 
