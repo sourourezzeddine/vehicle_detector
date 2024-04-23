@@ -7,4 +7,4 @@ a model  that detects vehicles entering a parking lot, extracts specific feature
 - [X] detect vehicle brand
 - [X] detect vehicle color
 - [X] LP
-- [ ] detect nationality (still lacks a little precision)
+- [X] detect nationality (still lacks a little precision)
