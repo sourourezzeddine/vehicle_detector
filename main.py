@@ -46,8 +46,9 @@ except :
     raise FileNotFoundError("The file 'main_config.json' was not found.")
 
 file_path = vehicle_det_config['video_path']
+frame_number=0
 
-def final_features_optimized(video_file):
+def final_features_optimized(video_file, frame_number):
     """!Identifies the needed features of the vehicle.
 
     This function extracts final features from a video file, including car/truck, LP, brand detection,
@@ -58,11 +59,11 @@ def final_features_optimized(video_file):
     @return final_features all the required features in a list in the following form ['car'/'truck', 'LP', 'brand' , 'nationality' , 'color']
     """
     # Initialize components
-    model, cap, frame_number, bg_subtractor = vehicle_initialize_detection.initialize_components(file_path)
+    model, cap, bg_subtractor = vehicle_initialize_detection.initialize_components(file_path)
 
     while True: 
         # Object detection loop
-        frame, results, frame_number = vehicle_initialize_detection.object_detection_loop(model, cap)
+        frame, results, frame_number = vehicle_initialize_detection.object_detection_loop(model, cap, frame_number)
         final_features=[]
         # Filter and process detected objects
         final_features = vehicle_features.filter_process_objects(results)
@@ -84,8 +85,9 @@ def final_features_optimized(video_file):
 
             # Return final features if all required features are found
             if len(final_features) == 5:
-                return final_features
+                return final_features,frame_number
 
-while True:
-    features_list = final_features_optimized(file_path)
-    vehicle_mqtt.run(features_list)
+features_list, frame_number = final_features_optimized(file_path, frame_number)
+vehicle_mqtt.run(features_list)
+#print ("frame number: ",frame_number)
+    
