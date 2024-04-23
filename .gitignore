@@ -1,3 +1,5 @@
 /html
 __pycache__
-
+.coverage
+.coveragerc
+/images/three.mp4
