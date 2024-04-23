@@ -42,7 +42,7 @@ DOXYFILE_ENCODING      = UTF-8
 # title of most generated pages and in a few other places.
 # The default value is: My Project.
 
-PROJECT_NAME           = "License plate identification"
+PROJECT_NAME           = "vehicle detector and identifier"
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number. This
 # could be handy for archiving the generated documentation or if some version
@@ -54,8 +54,7 @@ PROJECT_NUMBER         =
 # for a project that appears at the top of each page and should give viewer a
 # quick idea about the purpose of the project. Keep the description short.
 
-PROJECT_BRIEF          = This Python script leverages Optical Character Recognition (OCR) to extract text from images containing car license plates. The extracted text is then used to determine the nationality of the car based on the license plate information. The results are saved in a CSV (Comma Separated Values) file for further analysis or integration with other systems.
-
+PROJECT_BRIEF          = "A python project that detects a vehicle identifies its specific features and sends the results as a json message using MQTT communication protocol"
 # With the PROJECT_LOGO tag one can specify a logo or an icon that is included
 # in the documentation. The maximum height of the logo should not exceed 55
 # pixels and the maximum width should not exceed 200 pixels. Doxygen will copy
