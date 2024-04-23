@@ -55,7 +55,7 @@ def filter_process_objects(results):
                         car_found = True
                     elif j == 2 and result_dict[j] > 0.5:
                         LP_found = True
-                    elif 3 <= j <= 35 and result_dict[j] > 0.5:
+                    elif 3 <= j <= 35 and result_dict[j] > 0.45:
                         Brand_found = True
                 if car_found and LP_found and Brand_found: # if the vehicle and the brand and the lp are detected proceed to other tests
                     for feature in features:

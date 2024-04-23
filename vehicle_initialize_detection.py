@@ -21,20 +21,18 @@ def initialize_components(path):
         - the results of the general features (car/truck, lp, and brand) model
     """
     model = YOLO(vehicle_det_config['general_features_model'])
-    #cap = cv2.VideoCapture(path) 
-    cap = cv2.VideoCapture(0)   
-    frame_number = 0
+    cap = cv2.VideoCapture(path) 
+    #cap = cv2.VideoCapture(0)   
     bg_subtractor = cv2.createBackgroundSubtractorMOG2()  # Create background subtractor object
-    return model, cap, frame_number, bg_subtractor
+    return model, cap, bg_subtractor
 
-def object_detection_loop(model, cap):
+def object_detection_loop(model, cap, frame_number):
     """Perform object detection on video frames.
 
     @param the yolo model that identifies the general features (car/truck, lp, and brand) and cap.
 
     @return the frame's content, frame_number ,and the results of the general features model
     """
-    frame_number = 0
     while True:
         ret, frame = cap.read()
         if not ret:
