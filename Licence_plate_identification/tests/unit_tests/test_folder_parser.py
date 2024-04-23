@@ -1,5 +1,4 @@
 import os
-
 import pytest
 import sys 
 sys.path.append('../../lp_detection')
@@ -49,5 +48,6 @@ def test_analyze_folder(create_test_files):
                       os.path.join(folder_path, "test2.jpeg"),
                       os.path.join(folder_path, "test3.png"),
                       os.path.join(folder_path, "test4.bmp")]
+    # Ensure that the output of analyze_folder matches the expected_files list
     assert sorted(analyze_folder(folder_path)) == sorted(expected_files)
 

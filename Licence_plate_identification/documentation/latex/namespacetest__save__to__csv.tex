@@ -1,0 +1,49 @@
+\doxysection{test\+\_\+save\+\_\+to\+\_\+csv Namespace Reference}
+\hypertarget{namespacetest__save__to__csv}{}\label{namespacetest__save__to__csv}\index{test\_save\_to\_csv@{test\_save\_to\_csv}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacetest__save__to__csv_aa5d4ad2cf16f110fb934739b7c52d38a}{create\+\_\+test\+\_\+data}} (tmpdir)
+\item 
+\mbox{\hyperlink{namespacetest__save__to__csv_af2b80eebc75b9480078996a32d3dbb9f}{test\+\_\+save\+\_\+to\+\_\+csv}} (\mbox{\hyperlink{namespacetest__save__to__csv_aa5d4ad2cf16f110fb934739b7c52d38a}{create\+\_\+test\+\_\+data}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacetest__save__to__csv_aa5d4ad2cf16f110fb934739b7c52d38a}\label{namespacetest__save__to__csv_aa5d4ad2cf16f110fb934739b7c52d38a} 
+\index{test\_save\_to\_csv@{test\_save\_to\_csv}!create\_test\_data@{create\_test\_data}}
+\index{create\_test\_data@{create\_test\_data}!test\_save\_to\_csv@{test\_save\_to\_csv}}
+\doxysubsubsection{\texorpdfstring{create\_test\_data()}{create\_test\_data()}}
+{\footnotesize\ttfamily create\+\_\+test\+\_\+data (\begin{DoxyParamCaption}\item[{}]{tmpdir }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Fixture function to create test data and a temporary CSV file path.
+
+This function creates test data in the form of a list of dictionaries
+and provides a path to a temporary CSV file for use in testing the save_to_csv function.
+
+Args:
+    tmpdir: Pytest built-in fixture providing a temporary directory.
+
+Returns:
+    tuple: A tuple containing the test data and the path to the temporary CSV file.
+\end{DoxyVerb}
+ \Hypertarget{namespacetest__save__to__csv_af2b80eebc75b9480078996a32d3dbb9f}\label{namespacetest__save__to__csv_af2b80eebc75b9480078996a32d3dbb9f} 
+\index{test\_save\_to\_csv@{test\_save\_to\_csv}!test\_save\_to\_csv@{test\_save\_to\_csv}}
+\index{test\_save\_to\_csv@{test\_save\_to\_csv}!test\_save\_to\_csv@{test\_save\_to\_csv}}
+\doxysubsubsection{\texorpdfstring{test\_save\_to\_csv()}{test\_save\_to\_csv()}}
+{\footnotesize\ttfamily test\+\_\+save\+\_\+to\+\_\+csv (\begin{DoxyParamCaption}\item[{}]{create\+\_\+test\+\_\+data }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Test the save_to_csv function.
+
+This test function checks if the save_to_csv function correctly saves data to a CSV file.
+
+Args:
+    create_test_data: Fixture providing the test data and the path to the temporary CSV file.
+
+Returns:
+    None
+
+Raises:
+    AssertionError: If the function does not save the data correctly.
+\end{DoxyVerb}
+ 

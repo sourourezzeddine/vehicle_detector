@@ -8,7 +8,7 @@ from folder_parser import analyze_folder
 from text_extractor import extract_text_from_images
 from country_identifier import get_country_from_text
 from save_to_csv import save_to_csv
-from main import main 
+from LP import LP
 
 import os
 import tempfile

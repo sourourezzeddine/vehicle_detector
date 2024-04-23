@@ -14,8 +14,15 @@ def get_country_from_text(text):
              If no match is found, it returns 'Unknown' and None.
     :rtype: tuple[str, int] or tuple[str, None]
     """
-    with open('countries.conf', 'r') as file:
-        country_patterns = json.load(file)
+    try:
+        with open('countries.json', 'r') as file:
+            country_patterns = json.load(file)
+    except FileNotFoundError:
+        print("Error: countries.json file not found.")
+        return 'Unknown', None
+    except json.JSONDecodeError:
+        print("Error: Unable to decode JSON in countries.json.")
+        return 'Unknown', None
     
     # Iterate through each country and check for matches
     for country, keywords in country_patterns.items():
