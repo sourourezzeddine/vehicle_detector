@@ -1,4 +1,8 @@
-lp_detection/__pycache__
-documentation/latex
-documentation/html
+lp_detection/
+/latex
+/html
+__pycache__
+.coverage
+.coveragerc
+/images/three.mp4
 

@@ -1,0 +1,9 @@
+{
+    "test_image_color": "/home/pc/vehicle_detector/images/1.png",
+    "test_image_lp": "/home/pc/vehicle_detector/images/7.png",
+    "video_path" :  "/home/pc/vehicle_detector/images/one.mp4",
+    "project_directory" : "/home/pc/vehicle_detector"
+}
+
+
+
