@@ -1,0 +1,8 @@
+content: [run]
+omit =
+    /etc/python3.8/sitecustomize.py
+    /usr/lib/python3/dist-packages/*
+
+
+
+
