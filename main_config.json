@@ -1,6 +1,7 @@
 {
     "color_model" : "/home/pc/vehicle_detector/final_model_85.t",
     "generic_nationality_model" : "/home/pc/vehicle_detector/nationality_generic.pt",
+    "europe_nationality_model" : "/home/pc/vehicle_detector/europe_nationality_lp.pt",
     "general_features_model" : "/home/pc/vehicle_detector/best.pt",
     "video_path" :  "/home/pc/vehicle_detector/images/six.mp4"
 }
