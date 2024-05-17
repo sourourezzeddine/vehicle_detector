@@ -40,7 +40,10 @@ def predict_generic_nationality(image_to_cap):
     @return the country name OR "america" as a default value.
     """
     final_model = YOLO(vehicle_det_config['generic_nationality_model'])
-    nationality = ['europe','america','qatar','tunisia','egypt','UAE','libya']
+    nationality_list = ['europe','america','qatar','tunisia','egypt','UAE','libya']
+
+    final_europe_model = YOLO(vehicle_det_config['europe_nationality_model'])
+    europe_nationality_list = ['Poland','Italy','France','Spain','Belgium','Germany','Romania','Turkey']
 
     image = cv2.imread(image_to_cap)
     results = final_model.predict(image)
@@ -51,7 +54,18 @@ def predict_generic_nationality(image_to_cap):
                 confidences.append(boxes.conf)
                 class_ids.append(boxes.cls)
     if len(boxes) != 0:
-        return nationality[int(boxes.cls[0])]
+        nationality = nationality_list[int(boxes.cls[0])]
+        if nationality == 'europe':
+             europe_results = final_europe_model.predict(image)
+             for result in europe_results:
+                boxes = result.boxes.cpu().numpy()
+             if len(boxes) != 0:   
+                return europe_nationality_list[int(boxes.cls[0])]   
+             else:
+                 return "france"
+        else:
+             return nationality    
+
     else:
         return "america"
 

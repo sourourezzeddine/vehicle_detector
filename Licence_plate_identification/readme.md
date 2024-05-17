@@ -1,2 +1,0 @@
-This Python script leverages Optical Character Recognition (OCR) to extract text from images containing car license plates. The extracted text is then used to determine the nationality of the car based on the license plate information. The results are saved in a CSV (Comma Separated Values) file for further analysis or integration with other systems.
-to get the documentations run the command "doxygen doc"
