@@ -1,0 +1,8 @@
+torch
+opencv-python
+easyocr
+numpy
+pillow
+torchvision
+ultralytics
+paho-mqtt
