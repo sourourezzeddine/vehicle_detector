@@ -23,8 +23,8 @@ pip install -r requirements.txt
 ```
 
 ## Usage
-To run the project, ensure all configuration files are properly set up.
-Customize the paths in the following configuration files included in the repository:
+- To run the project, ensure all configuration files are properly set up.
+- Customize the paths in the following configuration files included in the repository:
     `main_config.json`
     `MQTT_config.json`
     `test_config.json`
@@ -74,8 +74,8 @@ The models were trained on datasets that were manually collected and annotated i
 
 ## Model_Architecture
 The project utilizes mainly 2 types of models models:
-    [YOLOv8](https://docs.ultralytics.com) for vehicle detection and classification. YOLOv8 is chosen for its efficiency in real-time applications.
-    A pretrained model for vehicle color recognition, sourced from [Vehicle-Make-Color-Recognition](https://github.com/nikalosa/Vehicle-Make-Color-Recognition).
+    - [YOLOv8](https://docs.ultralytics.com) for vehicle detection and classification. YOLOv8 is chosen for its efficiency in real-time applications.
+    - A pretrained model for vehicle color recognition, sourced from [Vehicle-Make-Color-Recognition](https://github.com/nikalosa/Vehicle-Make-Color-Recognition).
 
 ## Acknowledgements
 Special thanks to [Vehicle-Make-Color-Recognition](https://github.com/nikalosa/Vehicle-Make-Color-Recognition) for their pretrained model.
