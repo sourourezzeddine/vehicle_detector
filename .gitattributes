@@ -1,3 +1,2 @@
-final_model_85.t filter=lfs diff=lfs merge=lfs -text
-nationality_generic.psd filter=lfs diff=lfs merge=lfs -text
-nationality_generic.pt filter=lfs diff=lfs merge=lfs -text
+models/final_model_85.t filter=lfs diff=lfs merge=lfs -text
+models/nationality_generic.pt filter=lfs diff=lfs merge=lfs -text

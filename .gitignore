@@ -1,8 +1,10 @@
 lp_detection/
 /latex
 /html
-__pycache__
+/__pycache__
 .coverage
 .coveragerc
 /images/three.mp4
 .pytest_cache
+
+
