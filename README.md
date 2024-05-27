@@ -5,6 +5,8 @@ A Python codebase that detects a vehicle entering a parking lot, extracts its ty
 
 - [Description](##Description)
 - [Prerequisites](##prerequisites)
+- [Documentation](##Documentation)
+- [Testing](##Testing)
 - [Usage](##Usage)
 - [Project Structure](##Project_Structure)
 - [Data](##Data)
@@ -21,6 +23,16 @@ Ensure you have the following libraries installed. You can use the provided `req
 ```bash
 pip install -r requirements.txt
 ```
+## Documentation
+
+- All functions are documented in a wayhat's  compatible with [Doxygen](https://www.doxygen.nl/).
+- To generate the documentation, please customize the INPUT variable in the `doc.dox` file according to your project structure.
+
+## Testing
+- Integration and unit tests are implemented using [pytest](https://docs.pytest.org/en/latest/).
+- To try tests and get coverage (currently 88%) , go to your folder's root a,d execute:
+  ```bash
+pytest --cov```
 
 ## Usage
 - To run the project, ensure all configuration files are properly set up.
