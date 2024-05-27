@@ -95,7 +95,7 @@ TEST_DATA_DIR = 'test_data'
 @pytest.fixture
 def sample_license_plate_image():
     """Fixture to provide the path of the sample license plate image for testing."""
-    return "/home/pc/vehicle_detector/images/7.png" 
+    return "/home/pc/vehicle_detector/files_for_test/7.png" 
 
 def test_read_license_plate(sample_license_plate_image):
     """Test the read license plate function."""
@@ -123,7 +123,7 @@ def test_recognize_license_plate(initialized_components):
 @pytest.fixture
 def sample_video_path():
     """Fixture to provide the path of the sample video for testing."""
-    return "/home/pc/vehicle_detector/images/one.mp4" 
+    return "/home/pc/vehicle_detector/files_for_test/one.mp4" 
 
 def test_features_to_json(sample_video_path, monkeypatch):
     """Test the features to JSON function."""
