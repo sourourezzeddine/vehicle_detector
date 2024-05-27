@@ -16,6 +16,7 @@ Ensure you have the following libraries installed. You can use the provided `req
 
 ```bash
 pip install -r requirements.txt
+```
 
 
 ## ToDo_List
