@@ -28,7 +28,7 @@ pip install -r requirements.txt
     - `main_config.json`
     - `MQTT_config.json`
     - `test_config.json`
-You can then execute the whole script as: 
+- You can then execute the whole script as: 
 ```bash
 python3 main.py
 ```
@@ -70,10 +70,11 @@ vehicle_detector/
 ```
 
 ## Data
-The models were trained on datasets that were manually collected and annotated in the YOLO format using [CVAT](https://cvat.org/). The dataset annotations were specifically tailored for vehicle detection tasks.
+- The models were trained on datasets that were manually collected and annotated in the YOLO format using [CVAT](https://cvat.org/). 
+- The dataset annotations were specifically tailored for vehicle detection tasks.
 
 ## Model_Architecture
-The project utilizes mainly 2 types of models models:
+- The project utilizes mainly 2 types of models models:
     - [YOLOv8](https://docs.ultralytics.com) for vehicle detection and classification. YOLOv8 is chosen for its efficiency in real-time applications.
     - A pretrained model for vehicle color recognition, sourced from [Vehicle-Make-Color-Recognition](https://github.com/nikalosa/Vehicle-Make-Color-Recognition).
 
