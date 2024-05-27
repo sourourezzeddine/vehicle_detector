@@ -63,6 +63,7 @@ vehicle_initialize_detection.py
 vehicle_license.py
 vehicle_mqtt.py
 
+
 ## Data
 The models were trained on datasets that were manually collected and annotated in the YOLO format using [CVAT](https://cvat.org/). The dataset annotations were specifically tailored for vehicle detection tasks.
 
