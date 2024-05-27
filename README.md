@@ -8,7 +8,7 @@ A Python codebase that detects a vehicle entering a parking lot, extracts its ty
 - [Usage](##Usage)
 - [Project Structure](##Project_Structure)
 - [Data](##Data)
-- [Model Architecture](## Model Architecture)
+- [Model_Architecture](## Model Architecture)
 - [Acknowledgements](##Acknowledgements)
 - [To Do List](##ToDo_List)
 
