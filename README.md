@@ -32,7 +32,8 @@ pip install -r requirements.txt
 - Integration and unit tests are implemented using [pytest](https://docs.pytest.org/en/latest/).
 - To try tests and get coverage (currently 88%) , go to your folder's root a,d execute:
   ```bash
-pytest --cov```
+pytest --cov
+```
 
 ## Usage
 - To run the project, ensure all configuration files are properly set up.
