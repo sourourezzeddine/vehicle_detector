@@ -8,7 +8,7 @@ A Python codebase that detects a vehicle entering a parking lot, extracts its ty
 - [Usage](##Usage)
 - [Project Structure](##Project_Structure)
 - [Data](##Data)
-- [Model_Architecture](## Model Architecture)
+- [Model_Architecture](##Model_Architecture)
 - [Acknowledgements](##Acknowledgements)
 - [To Do List](##ToDo_List)
 
@@ -25,9 +25,9 @@ pip install -r requirements.txt
 ## Usage
 - To run the project, ensure all configuration files are properly set up.
 - Customize the paths in the following configuration files included in the repository:
-    `main_config.json`
-    `MQTT_config.json`
-    `test_config.json`
+    - `main_config.json`
+    - `MQTT_config.json`
+    - `test_config.json`
 You can then execute the whole script as: 
 ```bash
 python3 main.py
