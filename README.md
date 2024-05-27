@@ -25,7 +25,7 @@ pip install -r requirements.txt
 ```
 ## Documentation
 
-- All functions are documented in a wayhat's  compatible with [Doxygen](https://www.doxygen.nl/).
+- All functions are documented in  what's  compatible with [Doxygen](https://www.doxygen.nl/).
 - To generate the documentation, please customize the INPUT variable in the `doc.dox` file according to your project structure.
 
 ## Testing
