@@ -39,29 +39,24 @@ vehicle_detector/
 ├── main_config.json
 ├── main.py
 ├── models/
-│   ├── best.pt
-│   ├── europe_nationality_lp.pt
-│   ├── final_model_85.t
-│   ├── models_classes_info
-│   └── nationality_generic.pt
+│ ├── best.pt
+│ ├── europe_nationality_lp.pt
+│ ├── final_model_85.t
+│ ├── models_classes_info
+│ └── nationality_generic.pt
 ├── MQTT_config.json
 ├── README.md
 ├── requirements.txt
 ├── test_config.json
 └── tests/
-    ├── integration_test/
-    │   ├── test_config.json
-    │   └── test_integration.py
-    └── unit_tests/
-        ├── test_config.json
-        ├── test_vehicle_color.py
-        ├── test_vehicle_license.py
-        └── test_vehicle_mqtt.py
-vehicle_color.py
-vehicle_features.py
-vehicle_initialize_detection.py
-vehicle_license.py
-vehicle_mqtt.py
+├── integration_test/
+│ ├── test_config.json
+│ └── test_integration.py
+└── unit_tests/
+├── test_config.json
+├── test_vehicle_color.py
+├── test_vehicle_license.py
+└── test_vehicle_mqtt.py
 
 
 ## Data
