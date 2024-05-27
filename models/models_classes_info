@@ -1,0 +1,12 @@
+# best.pt brand, license plate, type model classes
+
+['car', 'truck', 'LP', 'Toyota', 'Volkswagen', 'Ford', 'Honda', 'Chevrolet', 'Nissan', 'BMW', 'Mercedes', 'Audi', 'Tesla', 'Hyundai', 'Kia', 'Mazda', 'Fiat', 'Jeep', 'Porsche', 'Volvo', 'Land Rover', 'Peugeot', 'Renault', 'Citroën', 'Isuzu', 'MAN', 'Iveco', 'Mitsubishi', 'Opel', 'Scoda', 'Mini', 'Ferrari', 'Lamborghini', 'Jaguar', 'Suzuki', 'Ibiza', 'Haval', 'GMC']
+
+# final_model_85.t color model classes
+['Black', 'Blue', 'Brown', 'Green', 'Orange', 'Red', 'Silver', 'White', 'Yellow']
+
+#nationality_generic.pt model classes
+['europe','america','qatar','tunisia','egypt','UAE','libya']
+
+#europe_nationality_lp.pt model classes
+['Poland','Italy','France','Spain','Belgium','Germany','Romania','Turkey']
