@@ -3,7 +3,7 @@ A Python codebase that detects a vehicle entering a parking lot, extracts its ty
 
 ## Table_of_content
 
-- [Description](##Description)
+- [Description](#Description)
 - [Prerequisites](##prerequisites)
 - [Documentation](##Documentation)
 - [Testing](##Testing)
