@@ -94,5 +94,5 @@ vehicle_detector/
 ## Acknowledgements
 Special thanks to [Vehicle-Make-Color-Recognition](https://github.com/nikalosa/Vehicle-Make-Color-Recognition) for their pretrained model.
 
-## ToDo List
+## ToDo_List
 - [X] add a dashboard that displays mqtt sub data.
