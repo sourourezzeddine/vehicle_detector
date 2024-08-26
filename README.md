@@ -3,16 +3,16 @@ A Python codebase that detects a vehicle entering a parking lot, extracts its ty
 
 ## Table_of_content
 
-- [Description](##Description)
-- [Prerequisites](##prerequisites)
-- [Documentation](##Documentation)
-- [Testing](##Testing)
-- [Usage](##Usage)
-- [Project Structure](##Project_Structure)
-- [Data](##Data)
-- [Model_Architecture](##Model_Architecture)
-- [Acknowledgements](##Acknowledgements)
-- [To Do List](##ToDo_List)
+- [Description](#Description)
+- [Prerequisites](#prerequisites)
+- [Documentation](#Documentation)
+- [Testing](#Testing)
+- [Usage](#Usage)
+- [Project Structure](#Project_Structure)
+- [Data](#Data)
+- [Model_Architecture](#Model_Architecture)
+- [Acknowledgements](#Acknowledgements)
+- [To Do List](#ToDo_List)
 
 ## Description
 The Vehicle Detector project is designed to automate the detection and classification of vehicles entering a parking lot. It identifies the vehicle type (car/truck), color, brand, license plate, and nationality.
@@ -94,5 +94,5 @@ vehicle_detector/
 ## Acknowledgements
 Special thanks to [Vehicle-Make-Color-Recognition](https://github.com/nikalosa/Vehicle-Make-Color-Recognition) for their pretrained model.
 
-## ToDo List
-- [ ] add a dashboard that displays mqtt sub data.
+## ToDo_List
+- [X] add a dashboard that displays mqtt sub data.
